@@ -161,3 +161,7 @@ cython_debug/
 
 # Reference Papers
 reference/
+
+# Database file
+biteplan_surrealdb.surql
+

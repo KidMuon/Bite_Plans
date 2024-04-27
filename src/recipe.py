@@ -28,7 +28,7 @@ class Measurement:
     'Teaspoon': MeasurementNames.Teaspoon,
     'tbsp': MeasurementNames.Tablespoon,
     'Tablespoon': MeasurementNames.Tablespoon,
-    'cup': MeasureNames.Cup
+    'cup': MeasurementNames.Cup
     }
 
     def __init__(self, amount_of_measure, measurement):

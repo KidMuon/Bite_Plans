@@ -1,0 +1,8 @@
+{
+    "databasename": "BitePlans",
+    "port": 8000,
+    "username": "biteplanroot",
+    "password": "biteplanpassword",
+    "namespace": "bp",
+    "filename": "biteplan.surql"
+}
