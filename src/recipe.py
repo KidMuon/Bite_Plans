@@ -6,17 +6,17 @@ class Recipe:
             raise ValueError('Recipes require names')
         self.name = recipe_name
         self.description = ''
-        self.dish_parts = []
+        self.recipe_ingredients = []
         self.servings = 1
 
     def addIngredient(self, ingredient, measurement):
-        self.dish_parts.append((measurement, ingredient))
+        self.recipe_ingredients.append((measurement, ingredient))
 
     def defineServings(self, servings):
         self.servings = servings
     
     def adjustRecipe(self, desired_servings):
-        for measurement, ingredient in dish_parts:
+        for measurement, ingredient in self.recipe_ingredients:
             measurement.adjustMeasurement(desired_servings / self.servings)
 
     def addDescription(self, description = ''):
