@@ -1,4 +1,5 @@
 from recipe import Recipe, Ingredient, Measurement
+from meal import Meal
 from local_llm import LLAMA3
 from local_surreal import SurrealDatabase
 
@@ -12,8 +13,9 @@ def recipe_to_database(sdm, recipe):
 
 def meal_to_database(sdm, meal):
     for recipe in meal.meal_parts:
+        print(recipe)
         recipe_to_database(sdm, recipe)
-    # meal to database
+    sdm.create(meal.db_table, meal.db_data)
 
 def main():
     LLM = LLAMA3()
@@ -24,9 +26,14 @@ def main():
     bacon_egg.addIngredient(Ingredient("Egg"), Measurement(3, "Count"))
     bacon_egg.addIngredient(Ingredient("American Cheese"), Measurement(2, "Slice"))
     bacon_egg.addIngredient(Ingredient("Whole Wheat Bread"), Measurement(2, "Slice"))
+    
+    breakfast = Meal("Sunday Morning Breakfast", 1)
+    breakfast.addDescription("Breakfast for Sunday, May 5th")
+    breakfast.addMealPart(bacon_egg)
 
     SDM = SurrealDatabase()
-    recipe_to_database(SDM, bacon_egg)
+    meal_to_database(SDM, breakfast)
+    SDM.select("Meal")
     SDM.select("Recipe")
     SDM.select("Ingredient")
 

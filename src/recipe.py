@@ -15,7 +15,7 @@ class Recipe:
             "Description": self.description, 
             "Ingredients": [],
             "Servings": self.servings
-            }
+        }
 
     def addIngredient(self, ingredient, measurement):
         self.recipe_ingredients.append((measurement, ingredient))
