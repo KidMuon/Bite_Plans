@@ -13,7 +13,6 @@ def recipe_to_database(sdm, recipe):
 
 def meal_to_database(sdm, meal):
     for recipe in meal.meal_parts:
-        print(recipe)
         recipe_to_database(sdm, recipe)
     sdm.create(meal.db_table, meal.db_data)
 
@@ -22,10 +21,10 @@ def main():
 
     bacon_egg = Recipe("Bacon, Egg, and Cheese Breakfast Sandwich")
     bacon_egg.addDescription(LLM.describe_recipe_from_name(bacon_egg.name))
-    bacon_egg.addIngredient(Ingredient("Bacon"), Measurement(0.125, "lbs"))
-    bacon_egg.addIngredient(Ingredient("Egg"), Measurement(3, "Count"))
-    bacon_egg.addIngredient(Ingredient("American Cheese"), Measurement(2, "Slice"))
-    bacon_egg.addIngredient(Ingredient("Whole Wheat Bread"), Measurement(2, "Slice"))
+    bacon_egg.addIngredient(Ingredient("Bacon"), Measurement(0.125, "lb"))
+    bacon_egg.addIngredient(Ingredient("Egg"), Measurement(3, "count"))
+    bacon_egg.addIngredient(Ingredient("American Cheese"), Measurement(2, "slice"))
+    bacon_egg.addIngredient(Ingredient("Whole Wheat Bread"), Measurement(2, "slice"))
     
     breakfast = Meal("Sunday Morning Breakfast", 1)
     breakfast.addDescription("Breakfast for Sunday, May 5th")

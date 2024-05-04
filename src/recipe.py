@@ -41,6 +41,7 @@ class MeasurementNames(StrEnum):
     lb = 'lbs'
     Count = 'Count'
     Slice = "Slice"
+    Ounce = 'oz'
 
 class Measurement:
     _measurement_lookup = {
@@ -49,9 +50,10 @@ class Measurement:
     'tbsp': MeasurementNames.Tablespoon,
     'Tablespoon': MeasurementNames.Tablespoon,
     'cup': MeasurementNames.Cup,
-    'lbs': MeasurementNames.lb,
-    'Count': MeasurementNames.Count,
-    'Slice': MeasurementNames.Slice
+    'lb': MeasurementNames.lb,
+    'count': MeasurementNames.Count,
+    'slice': MeasurementNames.Slice,
+    'oz': MeasurementNames.Ounce
     }
 
     def __init__(self, amount_of_measure, measurement):
