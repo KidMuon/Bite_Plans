@@ -1,0 +1,5 @@
+{
+    "recipe": {
+        "desc_system_prompt": "You are being passed the name of a recipe. Generate a short and appetizing description of the meal. Do not include any greeting."
+    }
+}

@@ -2,7 +2,10 @@ from enum import StrEnum
 
 class Recipe:
     def __init__(self, recipe_name):
+        if recipe_name == '':
+            raise ValueError('Recipes require names')
         self.name = recipe_name
+        self.description = ''
         self.dish_parts = []
         self.servings = 1
 
@@ -15,6 +18,9 @@ class Recipe:
     def adjustRecipe(self, desired_servings):
         for measurement, ingredient in dish_parts:
             measurement.adjustMeasurement(desired_servings / self.servings)
+
+    def addDescription(self, description = ''):
+        self.description = description
 
 class MeasurementNames(StrEnum):
     Teaspoon = 'Teaspoon'
