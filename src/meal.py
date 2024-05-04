@@ -11,5 +11,4 @@ class Meal:
         self.description = meal_description
 
     def addMealPart(self, recipe):
-        meal_part = recipe
-        self.meal_parts.append(meal_part.adjustRecipe(self.servings))
+        self.meal_parts.append(recipe.adjustRecipe(self.servings))   

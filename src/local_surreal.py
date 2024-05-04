@@ -1,4 +1,5 @@
 from surrealdb import Surreal
+from surrealdb.ws import SurrealPermissionException
 import json, asyncio
 
 class SurrealDatabase():
@@ -43,4 +44,7 @@ class SurrealDatabase():
                 self.namespace, 
                 self.database
                 )
-            surreal_database.create(table, data)
+            try:
+                await surreal_database.create(table, data)
+            except SurrealPermissionException:
+                await surreal_database.update(table, data)
