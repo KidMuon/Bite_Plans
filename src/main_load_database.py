@@ -7,6 +7,12 @@ from static_html import *
 
 def main():
     LLM = LLAMA3()
+    SDM = SurrealDatabase()
+
+    skip_if_populated = True
+    if len(SDM.select("Meal")) > 0 and skip_if_populated:
+        print("Database already populated with test data... Skipping...")
+        return
 
     bacon_egg = Recipe("Bacon, Egg, and Cheese Breakfast Sandwich")
     bacon_egg.addDescription(LLM.describe_recipe_from_name(bacon_egg.name))
@@ -19,7 +25,6 @@ def main():
     breakfast.addDescription("Breakfast for Sunday, May 5th")
     breakfast.addMealPart(bacon_egg)
 
-    SDM = SurrealDatabase()
     meal_to_database(SDM, breakfast)
 
     for file in list_html_files('html_files'):

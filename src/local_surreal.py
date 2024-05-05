@@ -17,7 +17,7 @@ class SurrealDatabase():
         return None
     
     def select(self, table):
-        asyncio.run(self._select_surreal(table))
+        return asyncio.run(self._select_surreal(table))
 
     def create(self, table, data):
         asyncio.run(self._create_surreal(table, data))
@@ -32,7 +32,8 @@ class SurrealDatabase():
                 self.namespace, 
                 self.database
                 )
-            print(await surreal_database.select(table))
+            records = await surreal_database.select(table)
+        return records
     
     async def _create_surreal(self, table, data):
         async with Surreal(self.connect_string) as surreal_database:
