@@ -13,6 +13,7 @@ surreal import --conn http://localhost:$SURREAL_PORT \
     --ns $SURREAL_NAMESPACE --db $SURREAL_DATABASENAME \
     $SURREAL_FILENAME
 
+python src/main_load_database.py
 python src/main.py
 
 surreal export --conn http://localhost:$SURREAL_PORT \

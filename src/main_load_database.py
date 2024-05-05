@@ -3,6 +3,7 @@ from meal import Meal
 from local_llm import LLAMA3
 from local_surreal import SurrealDatabase
 from load_database import *
+from static_html import *
 
 def main():
     LLM = LLAMA3()
@@ -24,10 +25,6 @@ def main():
     for file in list_html_files('html_files'):
         load_html_to_database(SDM, file)
 
-    SDM.select("Meal")
-    SDM.select("Recipe")
-    SDM.select("Ingredient")
-    SDM.select("Product")
 
 if __name__ == '__main__':
     main()
