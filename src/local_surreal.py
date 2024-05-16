@@ -22,6 +22,20 @@ class SurrealDatabase():
     def create(self, table, data):
         asyncio.run(self._create_surreal(table, data))
 
+    def get_query(self, query):
+        return asyncio.run(self._get_query(query))
+
+    def get_column_from_table(self, column, table):
+        results = []
+        if isinstance(column, list):
+            query = "SELECT " + ", ".join(column) + " FROM " + table
+        else:
+            query = "SELECT " + column + " FROM " + table
+        raw_result = self.get_query(query)
+        #for name in [x[column] for x in raw_result[0]['result']]:
+        #    results.append(name)
+        return raw_result[0]['result']
+
     async def _select_surreal(self, table):
         async with Surreal(self.connect_string) as surreal_database:
             await surreal_database.signin(
@@ -49,3 +63,15 @@ class SurrealDatabase():
                 await surreal_database.create(table, data)
             except SurrealPermissionException:
                 await surreal_database.update(table, data)
+
+    async def _get_query(self, query):
+        async with Surreal(self.connect_string) as surreal_database:
+            await surreal_database.signin(
+                {"user": self.username,
+                "pass": self.password}
+                )
+            await surreal_database.use(
+                self.namespace, 
+                self.database
+                )
+            return await surreal_database.query(query)

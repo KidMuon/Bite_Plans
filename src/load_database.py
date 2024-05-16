@@ -32,7 +32,8 @@ def product_to_database(sdm, product):
         "Product:"+hash_string(product["description"]),
         {
             "Product_Description": product["description"],
-            "Product_Price": product["price"]
+            "Product_Price": product["price"],
+            "Ingredient": ""
         }
     )
 
