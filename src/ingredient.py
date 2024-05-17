@@ -1,11 +1,14 @@
 from hash_functions import hash_string
+from measurement import *
 
 class Ingredient:
     def __init__(self, ingredient_name):
         self.name = ingredient_name
-        self.hash_key = hash_string(self.name)
-        self.db_table = 'Ingredient:' + self.hash_key
-        self.db_data = {"Name": self.name}
 
     def __repr__(self):
         return str(self.name)
+
+def ingredient_to_database(sdm, ingredient):
+    ingredient_db_table = 'Ingredient:' + hash_string(ingredient.name)
+    ingredient_db_data = {"Name": ingredient.name}
+    sdm.create(ingredient_db_table, ingredient_db_data)

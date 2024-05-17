@@ -1,6 +1,6 @@
 from hash_functions import hash_string
-from measurement import Measurement
-from ingredient import Ingredient
+from ingredient import *
+from measurement import *
 
 class Recipe:
     def __init__(self, recipe_name):
@@ -10,21 +10,12 @@ class Recipe:
         self.description = ''
         self.recipe_ingredients = []
         self.servings = 1
-        self.db_table = 'Recipe:' + hash_string(self.name)
-        self.db_data = {
-            "Name": self.name, 
-            "Description": self.description, 
-            "Ingredients": [],
-            "Servings": self.servings
-        }
 
     def addIngredient(self, ingredient, measurement):
         self.recipe_ingredients.append((measurement, ingredient))
-        self.db_data["Ingredients"].append(str(ingredient))
 
     def defineServings(self, servings):
         self.servings = servings
-        self.db_data["Servings"] = self.servings
     
     def changeServings(self, desired_servings):
         for measurement, ingredient in self.recipe_ingredients:
@@ -32,4 +23,21 @@ class Recipe:
 
     def addDescription(self, description = ''):
         self.description = description
-        self.db_data["Description"] = self.description
+
+def recipe_to_database(sdm, recipe):
+    for _, ingredient in recipe.recipe_ingredients:
+        ingredient_to_database(sdm, ingredient)
+
+    recipe_db_table = 'Recipe:' + hash_string(recipe.name)
+    recipe_ingredients = [ingredient[1].name for ingredient in recipe.recipe_ingredients]
+    recipe_db_data = {
+            "Name": recipe.name, 
+            "Description": recipe.description, 
+            "Ingredients": recipe_ingredients,
+            "Servings": recipe.servings
+        }
+
+    sdm.create(recipe_db_table, recipe_db_data)
+
+def describe_recipe_with_LLM(llm, recipe):
+    recipe.addDescription(llm.describe_recipe_from_name(recipe.name))

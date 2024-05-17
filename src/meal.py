@@ -1,4 +1,4 @@
-from recipe import Recipe
+from recipe import *
 from hash_functions import hash_string
 
 class Meal:
@@ -7,20 +7,26 @@ class Meal:
         self.servings = servings
         self.description = meal_description
         self.meal_parts = []
-        self.db_table = 'Meal:' + hash_string(self.name)
-        self.db_data = {
-            "Name": self.name,
-            "Description": self.description,
-            "Meal_Parts": [],
-            "Servings": self.servings
-        }
 
     def addDescription(self, meal_description):
         self.description = meal_description
-        self.db_data["Description"] = self.description
 
     def addMealPart(self, recipe):
         insert_recipe = recipe
         insert_recipe.changeServings(self.servings)
         self.meal_parts.append(insert_recipe)
-        self.db_data["Meal_Parts"].append(recipe.name)
+
+def meal_to_database(sdm, meal):
+    for recipe in meal.meal_parts:
+        recipe_to_database(sdm, recipe)
+
+    meal_db_table = 'Meal:' + hash_string(meal.name)
+    recipe_names = [recipe.name for recipe in meal.meal_parts]
+    meal_db_data = {
+        "Name": meal.name,
+        "Description": meal.description,
+        "Meal_Parts": recipe_names,
+        "Servings": meal.servings
+    }
+
+    sdm.create(meal_db_table, meal_db_data)
