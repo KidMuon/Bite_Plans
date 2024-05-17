@@ -25,6 +25,9 @@ class SurrealDatabase():
     def get_query(self, query):
         return asyncio.run(self._get_query(query))
 
+    def update(self, table, data):
+        asyncio.run(self._update_surreal(table, data))
+
     def get_column_from_table(self, column, table):
         results = []
         if isinstance(column, list):
@@ -75,3 +78,15 @@ class SurrealDatabase():
                 self.database
                 )
             return await surreal_database.query(query)
+    
+    async def _update_surreal(self, table, data):
+        async with Surreal(self.connect_string) as surreal_database:
+            await surreal_database.signin(
+                {"user": self.username,
+                "pass": self.password}
+                )
+            await surreal_database.use(
+                self.namespace, 
+                self.database
+                )
+            await surreal_database.update(table, data)

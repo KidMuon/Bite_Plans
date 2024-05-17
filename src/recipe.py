@@ -1,5 +1,6 @@
-from enum import StrEnum
 from hash_functions import hash_string
+from measurement import Measurement
+from ingredient import Ingredient
 
 class Recipe:
     def __init__(self, recipe_name):
@@ -32,46 +33,3 @@ class Recipe:
     def addDescription(self, description = ''):
         self.description = description
         self.db_data["Description"] = self.description
-
-class MeasurementNames(StrEnum):
-    Teaspoon = 'Teaspoon'
-    Tablespoon = 'Tablespoon'
-    Cup = 'Cup'
-    fl_OZ = 'Fluid Ounce'
-    lb = 'lbs'
-    Count = 'Count'
-    Slice = "Slice"
-    Ounce = 'oz'
-
-class Measurement:
-    _measurement_lookup = {
-    'tsp': MeasurementNames.Teaspoon,
-    'Teaspoon': MeasurementNames.Teaspoon,
-    'tbsp': MeasurementNames.Tablespoon,
-    'Tablespoon': MeasurementNames.Tablespoon,
-    'cup': MeasurementNames.Cup,
-    'lb': MeasurementNames.lb,
-    'count': MeasurementNames.Count,
-    'slice': MeasurementNames.Slice,
-    'oz': MeasurementNames.Ounce
-    }
-
-    def __init__(self, amount_of_measure, measurement):
-        self.amount = amount_of_measure
-        if self._measurement_lookup.get(measurement, None):
-            self.measurement = self._measurement_lookup.get(measurement, None)
-        else:
-            raise ValueError("Measurement not in lookup table.")
-
-    def adjustMeasurement(self, scale_factor):
-        self.amount *= scale_factor
-
-class Ingredient:
-    def __init__(self, ingredient_name):
-        self.name = ingredient_name
-        self.hash_key = hash_string(self.name)
-        self.db_table = 'Ingredient:' + self.hash_key
-        self.db_data = {"Name": self.name}
-
-    def __repr__(self):
-        return str(self.name)
