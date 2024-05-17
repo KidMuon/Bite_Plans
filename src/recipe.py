@@ -40,4 +40,7 @@ def recipe_to_database(sdm, recipe):
     sdm.create(recipe_db_table, recipe_db_data)
 
 def describe_recipe_with_LLM(llm, recipe):
-    recipe.addDescription(llm.describe_recipe_from_name(recipe.name))
+    system_prompt = "You are being passed the name of a recipe."
+    system_prompt += " Generate a short and appetizing description of the meal."
+    system_prompt += " Do not include any greeting."
+    recipe.addDescription(llm.complex_prompt(system_prompt, recipe.name))

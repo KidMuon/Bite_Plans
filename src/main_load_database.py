@@ -14,7 +14,7 @@ def main():
     LLM = LLAMA3()
     SDM = SurrealDatabase()
 
-    skip_if_populated = False
+    skip_if_populated = True
     if len(SDM.select("Meal")) > 0 and skip_if_populated:
         print("Database already populated with test data... Skipping...")
         return
