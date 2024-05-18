@@ -30,3 +30,12 @@ def meal_to_database(sdm, meal):
     }
 
     sdm.create(meal_db_table, meal_db_data)
+
+def get_meals_from_database(sdm):
+    meal_list = []
+    for database_entry in sdm.select('Meal'):
+        meal = Meal(database_entry["Name"], database_entry["Servings"], database_entry["Description"])
+        
+        meal_list.append(meal)
+
+    return meal_list

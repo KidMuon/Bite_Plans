@@ -44,3 +44,12 @@ def describe_recipe_with_LLM(llm, recipe):
     system_prompt += " Generate a short and appetizing description of the meal."
     system_prompt += " Do not include any greeting."
     recipe.addDescription(llm.complex_prompt(system_prompt, recipe.name))
+
+def get_recipes_from_database(sdm):
+    recipe_list = []
+    for database_entry in sdm.select("Recipe"):
+        recipe = Recipe(database_entry["Name"])
+        recipe.addDescription(database_entry["Description"])
+        recipe_list.append(recipe)
+
+    return recipe_list

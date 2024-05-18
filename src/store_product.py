@@ -58,7 +58,8 @@ def get_products_from_database(sdm):
         product = Store_Product(database_entry["Product_Description"])
         product.setPrice(database_entry.get("Product_Price", None))
         product.setIngredient(database_entry.get("Ingredient", None))
-        product_list.append(product)
+        if product.price:
+            product_list.append(product)
 
     return product_list
 
